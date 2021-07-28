@@ -1,0 +1,20 @@
+<section>
+  <div class="container">
+    <table class="table w-50">
+      <thead>
+        <tr>
+          <th>Role Name</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <tr *ngFor="let role of allRoles, let i = index">
+          <td>{{role.roleName}}</td>
+          <td><a class='btn btn-warning' (click)="EditRole(role, i)">Edit</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+  </div>
+</section>

@@ -1,0 +1,8 @@
+<section class="mt-4">
+  <div class=" d-flex align-item-center justify-content-end mb-5" *ngIf='!this._RolesDataService.stop'>
+
+    <a [routerLink]="['./addRole']" class="btn btn-secondary me-3" (click)='reset()'>Add Role</a>
+
+  </div>
+  <router-outlet></router-outlet>
+</section>

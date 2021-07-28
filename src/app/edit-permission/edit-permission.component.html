@@ -1,0 +1,33 @@
+<section class="my-4">
+  <div class="container">
+    <form>
+
+
+      <div class='roleInput w-25'>
+        <label for="f-name" class="form-label">Permission Name</label>
+        <input type="text" class="form-control" id="f-name">
+        <!-- <div class="text-danger my-2" *ngIf="addUser.get('fName')?.errors != null && addUser.get('fName')?.touched">
+            <p *ngIf='addUser.get("fName")?.errors?.required'>your first name is required</p>
+            <p *ngIf='addUser.get("fName")?.errors?.minlength'>your name must be more the 3 characters</p>
+            <p *ngIf='addUser.get("fName")?.errors?.maxlength'>your name must be less the 10 characters</p>
+          </div> -->
+      </div>
+
+      <div class="permissions my-4">
+        <div *ngFor="let permission of allPermission" class="form-check form-check-block">
+          <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+          <label class="form-check-label" for="inlineCheckbox1">{{permission.roleName}}</label>
+        </div>
+      </div>
+
+
+
+      <div class="text-end">
+        <button type="button" class="btn btn-danger me-2">Delete Permission</button>
+        <button type="submit" class="btn btn-primary me-2">Save</button>
+        <button type="submit" class="btn btn-primary me-2">Cancel</button>
+
+      </div>
+    </form>
+  </div>
+</section>

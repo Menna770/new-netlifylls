@@ -1,0 +1,28 @@
+<section>
+  <!-- <a routerLink="control/users/addUser" class="btn btn-secondary mb-3" (click)='reset()'>add User</a> -->
+  <div class="container">
+    <input class="form-control w-75 mx-auto mb-4" placeholder="Search" [(ngModel)]="charSear" />
+    <table class="table">
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">gender</th>
+          <th scope="col">years</th>
+          <th scope="col">Edit</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor='let user of Users1 | searchName :charSear ,let i = index'>
+          <th scope="row">{{user.IDNum}}</th>
+          <td>{{user.fName + " "  + user.sName}}</td>
+          <td>{{user.gender}}</td>
+          <td>{{user.years}}</td>
+          <td><a class="btn btn-warning" (click)='edit(i , user)'>Edit</a></td>
+        </tr>
+      </tbody>
+    </table>
+
+
+  </div>
+</section>

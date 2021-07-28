@@ -1,0 +1,78 @@
+<section class="my-4">
+  <div class="container">
+    <form [formGroup]='addUser' (ngSubmit)='subObject(addUser)'>
+      <div class="row mb-3">
+        <div class="col">
+          <label for="f-name" class="form-label">first name</label>
+          <input type="text" formControlName='fName' class="form-control" id="f-name">
+          <div class="text-danger my-2" *ngIf="addUser.get('fName')?.errors != null && addUser.get('fName')?.touched">
+            <p *ngIf='addUser.get("fName")?.errors?.required'>your first name is required</p>
+            <p *ngIf='addUser.get("fName")?.errors?.minlength'>your name must be more the 3 characters</p>
+            <p *ngIf='addUser.get("fName")?.errors?.maxlength'>your name must be less the 10 characters</p>
+          </div>
+        </div>
+        <div class="col">
+          <label for="s-name" class="form-label">second name</label>
+          <input type="text" class="form-control" id="s-name" formControlName='sName'>
+          <div class="text-danger my-2" *ngIf="addUser.get('sName')?.errors != null && addUser.get('sName')?.touched">
+            <p *ngIf='addUser.get("sName")?.errors?.required'>your first name is required</p>
+            <p *ngIf='addUser.get("sName")?.errors?.minlength'>your name must be more the 3 characters</p>
+            <p *ngIf='addUser.get("sName")?.errors?.maxlength'>your name must be less the 10 characters</p>
+          </div>
+        </div>
+      </div>
+      <div class="row mb-3">
+        <div class="col">
+          <label for="idNum" class="form-label">ID</label>
+          <input type="text" class="form-control" id="idNum" formControlName='IDNum'>
+          <div class="text-danger my-2" *ngIf="addUser.get('IDNum')?.errors != null && addUser.get('IDNum')?.touched">
+            <p *ngIf='addUser.get("IDNum")?.errors?.required'>your first name is required</p>
+            <p *ngIf='addUser.get("IDNum")?.errors?.pattern'>your id must be numbers</p>
+          </div>
+        </div>
+        <div class="col">
+          <label for="years" class="form-label">years</label>
+          <input type="text" class="form-control" id="years" formControlName='years'>
+          <div class="text-danger my-2" *ngIf="addUser.get('years')?.errors != null && addUser.get('years')?.touched">
+            <p *ngIf='addUser.get("years")?.errors?.required'>your first name is required</p>
+            <p *ngIf='addUser.get("years")?.errors?.pattern'>your id must be numbers</p>
+            <p *ngIf='addUser.get("years")?.errors?.min'>It must be greater than 16 </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col mb-3">
+        <label for="gender" class="form-label">gender</label>
+        <select class="form-select form-select-md mb-3" id="gender" formControlName='gender'>
+          <option value="male">male</option>
+          <option value="female">female</option>
+        </select>
+        <div class="text-danger my-2" *ngIf="addUser.get('gender')?.errors != null && addUser.get('gender')?.touched">
+          <p *ngIf='addUser.get("gender")?.errors?.required'>your first name is required</p>
+        </div>
+      </div>
+      <button [disabled]='addUser.invalid' type="submit" class="btn btn-primary me-2">Save</button>
+      <button *ngIf="checkEdit" type="button" class="btn btn-danger mr-1" (click)='deleteUser()'>Delete user</button>
+    </form>
+  </div>
+  <div class="container mt-4">
+    <table class="table" *ngIf='userEdit'>
+      <thead>
+        <tr>
+          <th scope="col">ID</th>
+          <th scope="col">Name</th>
+          <th scope="col">gender</th>
+          <th scope="col">years</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor='let user of userEdit,let i = index'>
+          <th scope="row">{{user.IDNum}}</th>
+          <td>{{user.fName + " "  + user.sName}}</td>
+          <td>{{user.gender}}</td>
+          <td>{{user.years}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
