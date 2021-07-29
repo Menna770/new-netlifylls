@@ -18,6 +18,10 @@ export class UserTableComponent implements OnInit {
       var retrievedObject = localStorage.getItem('usersLLS');
       this.Users1 = JSON.parse(retrievedObject || '{}');
     }
+
+    // this._UserDataService.getUsers().subscribe((data) => {
+    //   console.log(data);
+    // });
   }
   constructor(
     private _Router: Router,

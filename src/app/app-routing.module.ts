@@ -52,6 +52,11 @@ const routes: Routes = [
           { path: '', redirectTo: 'roleTable', pathMatch: 'full' },
           { path: 'roleTable', component: RoleTableComponent },
           {
+            path: 'addRole/:id',
+            component: AddRoleComponent,
+            canDeactivate: [LoadingGuardGuard],
+          },
+          {
             path: 'addRole',
             component: AddRoleComponent,
             canDeactivate: [LoadingGuardGuard],

@@ -9,9 +9,11 @@
       </thead>
 
       <tbody>
-        <tr *ngFor="let role of allRoles, let i = index">
-          <td>{{role.roleName}}</td>
-          <td><a class='btn btn-warning' (click)="EditRole(role, i)">Edit</a></td>
+        <tr *ngFor="let role of allRoles">
+          <td>{{role.title}}</td>
+          <!-- <td><a class='btn btn-warning' (click)="EditRole(role.id)">Edit</a></td> -->
+          <td><a class='btn btn-warning' [routerLink]="'/control/roles/addRole/' + role.id">Edit</a></td>
+
         </tr>
       </tbody>
     </table>

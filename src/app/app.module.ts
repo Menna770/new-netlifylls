@@ -20,6 +20,7 @@ import { RoleTableComponent } from './role-table/role-table.component';
 import { AddRoleComponent } from './add-role/add-role.component';
 import { PermissionTableComponent } from './permission-table/permission-table.component';
 import { EditPermissionComponent } from './edit-permission/edit-permission.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,13 @@ import { EditPermissionComponent } from './edit-permission/edit-permission.compo
     PermissionTableComponent,
     EditPermissionComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, FormsModule, ReactiveFormsModule],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    FormsModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })

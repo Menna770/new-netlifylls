@@ -1,7 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 import { RolesDataService } from '../roles-data.service';
+import { UserDataService } from '../user-data.service';
 
 @Component({
   selector: 'app-add-role',
@@ -9,86 +16,87 @@ import { RolesDataService } from '../roles-data.service';
   styleUrls: ['./add-role.component.scss'],
 })
 export class AddRoleComponent implements OnInit {
-  /* ------------------------------- form Group ------------------------------- */
-  addRole = new FormGroup({
-    id: new FormControl(null),
-    roleName: new FormControl(null, [
-      Validators.required,
-      Validators.minLength(3),
-      Validators.maxLength(10),
-    ]),
-    permissions: new FormArray([
-      new FormControl(false),
-      new FormControl(false),
-      new FormControl(false),
-    ]),
-  });
+  myForm!: FormGroup;
 
-  /* ------------------------------- post object ------------------------------ */
+  unSub: any;
 
-  // addRoleF = {
-  //   id: '',
-  //   title: this.addRole.value.roleName,
-  //   description: '',
-  //   permissions: [''],
-  // };
-  /* ------------------------------- f post object ------------------------------ */
-
-  listPermissions: any[] = [
-    { name: 'Add Experiment', value: '11', formName: 'Add_Experiment' },
-    { name: 'Edit Experiment', value: '12', formName: 'Edit_Experiment' },
-    { name: 'Delete Experiment', value: '13', formName: 'Delete_Experiment' },
-  ];
+  listPermissions: any[] = [];
 
   allRoles: {}[] = [];
-  roleIndex = this._RolesDataService.roleIndex;
 
   constructor(
     public _RolesDataService: RolesDataService,
-    private _Router: Router
-  ) {}
-
-  submitRole() {
-    console.log(this.addRole.value);
-    if (this._RolesDataService.checkEditRole) {
-      this.allRoles.splice(this.roleIndex, 1, this.addRole.value);
-    } else {
-      this.allRoles.push(this.addRole.value);
+    private _Router: Router,
+    private _UserDataService: UserDataService,
+    private fb: FormBuilder,
+    private _ActivatedRoute: ActivatedRoute
+  ) {
+    this.idRole = this._ActivatedRoute.snapshot.params.id;
+    if (this.idRole) {
+      this._RolesDataService.stop = true;
     }
 
-    localStorage.setItem('roles', JSON.stringify(this.allRoles));
-    this.addRole.reset();
+    _RolesDataService.getPermissions().subscribe((roles) => {
+      this.listPermissions = roles.data;
+      // console.log(roles.data);
+      // this.emails = roles.data.id;
+    });
   }
 
-  // filterResults(isChecked: any) {
-  //   if (isChecked.target.checked) {
-  //     this.addRoleF.permissions.push(isChecked.target.value);
-  //     console.log(isChecked.target.value); // {}, true || false
-  //   }
-  // }
-
-  unSub: any;
-  ngOnInit(): void {
-    if (localStorage.getItem('roles') != null) {
-      this.allRoles = JSON.parse(localStorage.getItem('roles') || '{}');
-    } else {
-      this.allRoles = [];
-    }
-
-    /* --------------------------- return data to edit -------------------------- */
-
+  submitRole(form: any) {
     if (this._RolesDataService.checkEditRole) {
-      this.unSub = this._RolesDataService.editedRole.subscribe((data: any) => {
-        for (let i = 0; i < data.permissions.length; i++) {
-          console.log(data.permissions[i]);
-          this.addRole.patchValue({
-            roleName: data.roleName,
-            permissions: [data.permissions[i]],
-          });
-        }
+      this._RolesDataService.editRoles(form.value).subscribe((res) => {
+        console.log(res);
+      });
+    } else {
+      this._RolesDataService.AddRoles(form.value).subscribe((res) => {
+        console.log(res);
       });
     }
-    /* --------------------------- F return data to edit -------------------------- */
+    this.myForm.reset();
+  }
+
+  onChange(id: string) {
+    const rolePermission = <FormArray>this.myForm?.controls.permission;
+    let index = rolePermission.controls.findIndex((x) => x.value == id);
+    if (index == -1) {
+      rolePermission.push(new FormControl(id));
+    } else {
+      rolePermission.removeAt(index);
+    }
+  }
+
+  idRole: string = '';
+
+  dataRole: any;
+
+  ngOnInit(): void {
+    console.log(this.idRole);
+
+    this._RolesDataService.getRoleById(this.idRole).subscribe((res) => {
+      this.dataRole = res.data;
+      console.log(res);
+    });
+
+    // if (localStorage.getItem('roles') != null) {
+    //   this.allRoles = JSON.parse(localStorage.getItem('roles') || '{}');
+    // } else {
+    //   this.allRoles = [];
+    // }
+
+    /* -------------------------------- api data -------------------------------- */
+    this.myForm = this.fb.group({
+      title: new FormControl(),
+      description: new FormControl(),
+      permission: this.fb.array([]),
+    });
+    if (this.dataRole) {
+      this.myForm.patchValue({
+        title: this.dataRole.title,
+        description: this.dataRole.description,
+        permission: this.dataRole.permissions,
+      });
+    }
   }
 
   cancel() {
@@ -96,9 +104,9 @@ export class AddRoleComponent implements OnInit {
   }
 
   deleteRole() {
-    this.allRoles.splice(this.roleIndex, 1);
+    // this.allRoles.splice(this.roleIndex, 1);
     localStorage.setItem('roles', JSON.stringify(this.allRoles));
-    this.addRole.reset();
+    // this.addRole.reset();
     this._Router.navigate(['./control/roles']);
   }
 
@@ -109,10 +117,11 @@ export class AddRoleComponent implements OnInit {
     this._RolesDataService.stop = false;
   }
   CanDeactivate() {
-    if (this.addRole.status == 'VALID' && this.addRole.touched) {
-      return window.confirm('your data not save');
-    } else {
-      return true;
-    }
+    // if (this.addRole.status == 'VALID' && this.addRole.touched) {
+    //   return window.confirm('your data not save');
+    // } else {
+    //   return true;
+    // }
+    return true;
   }
 }

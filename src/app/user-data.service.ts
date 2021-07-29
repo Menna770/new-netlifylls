@@ -1,5 +1,6 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -16,5 +17,18 @@ export class UserDataService {
 
   stop: any = false;
 
-  constructor() {}
+  constructor(private _HttpClient: HttpClient) {}
+
+  // createAuthorizationHeader(headers: HttpHeaders) {
+  //   headers.append('Content-Type', 'application/json');
+  // }
+  api: string = 'https://asrt-lls-api.herokuapp.com/api';
+
+  // getUsers(): Observable<any> {
+  //   const headers = { 'Content-Type': 'application/json' };
+  //   return this._HttpClient.get(
+  //     'https://asrt-lls-api.herokuapp.com/api/user/GetUsers',
+  //     { headers }
+  //   );
+  // }
 }
