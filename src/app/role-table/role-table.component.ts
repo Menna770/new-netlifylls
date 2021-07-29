@@ -19,6 +19,7 @@ export class RoleTableComponent implements OnInit {
     /* ----------------------------- api data table ----------------------------- */
     this._RolesDataService.getRoles().subscribe((data) => {
       this.allRoles = data.data;
+      console.log(data.data);
     });
   }
 

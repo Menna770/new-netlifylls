@@ -3,7 +3,7 @@
     <form [formGroup]='myForm' (ngSubmit)='submitRole(myForm)'>
       <div class='roleInput w-25'>
         <label for="f-name" class="form-label">Role Name</label>
-        <input type="text" class="form-control" id="f-name" formControlName='title'>
+        <input type="text" class="form-control" id="f-name" formControlName='title' />
         <div class="text-danger my-2" *ngIf="myForm.get('title')?.errors != null && myForm.get('title')?.touched">
           <p *ngIf='myForm.get("title")?.errors?.required'>Role Name is required</p>
           <p *ngIf='myForm.get("title")?.errors?.minlength'>Min characters: 3 </p>
@@ -11,14 +11,14 @@
         </div>
       </div>
 
-      <div class="permissions my-4" formArrayName='permission'>
-        <div class="form-check form-check-block" *ngFor="let rolPermission of listPermissions">
+      <div class="permissions my-4" formArrayName='permissions'>
 
-          <input class="form-check-input" type="checkbox" [id]="rolPermission.id"
-            (change)="onChange(rolPermission.id)" />
+        <div class="form-check form-check-block" *ngFor="let rolPermission of listPermissions">
+          <input class="form-check-input" type="checkbox" [id]="rolPermission.id" (change)="onChange(rolPermission.id)">
           <label class="form-check-label" [for]="rolPermission.id">{{rolPermission.title}}</label>
         </div>
       </div>
+      <!-- [checked]='rolPer.length > 0  && rolPer.findIndex(rolPermission.id)'> -->
 
 
       <div class="text-end">

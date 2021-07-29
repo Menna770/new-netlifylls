@@ -41,23 +41,43 @@ export class AddRoleComponent implements OnInit {
       // console.log(roles.data);
       // this.emails = roles.data.id;
     });
-  }
 
-  submitRole(form: any) {
-    if (this._RolesDataService.checkEditRole) {
-      this._RolesDataService.editRoles(form.value).subscribe((res) => {
-        console.log(res);
-      });
-    } else {
-      this._RolesDataService.AddRoles(form.value).subscribe((res) => {
-        console.log(res);
+    if (this.idRole) {
+      this._RolesDataService.getRoleById(this.idRole).subscribe((res) => {
+        console.log(res.data);
+        this.role = res.data;
+        console.log('rolPer', this.role);
+
+        // this.myForm.controls['title'].setValue(res.data.title);
+        // const rolePermission = <FormArray>this.myForm?.controls.permission;
+        // rolePermission.push(res.data.permissions);
+        // this.myForm.controls['permission'].patchValue(res.data.permissions);
+
+        this.myForm.setValue({
+          title: res.data.title,
+          description: res.data.description,
+          permissions: res.data.permissions,
+        });
       });
     }
+  }
+  /* ------------------------------- submit fun ------------------------------- */
+  submitRole(form: any) {
+    if (this.idRole) {
+      // this._RolesDataService.editRoles(form.value).subscribe((res) => {
+      //   console.log(res);
+      // });
+    } else {
+      this._RolesDataService.AddRoles(form.value).subscribe((res) => {
+        console.log('add', res);
+      });
+    }
+    console.log(this.myForm.value);
     this.myForm.reset();
   }
 
   onChange(id: string) {
-    const rolePermission = <FormArray>this.myForm?.controls.permission;
+    const rolePermission = <FormArray>this.myForm?.controls.permissions;
     let index = rolePermission.controls.findIndex((x) => x.value == id);
     if (index == -1) {
       rolePermission.push(new FormControl(id));
@@ -68,35 +88,17 @@ export class AddRoleComponent implements OnInit {
 
   idRole: string = '';
 
-  dataRole: any;
+  role: any;
 
-  ngOnInit(): void {
-    console.log(this.idRole);
-
-    this._RolesDataService.getRoleById(this.idRole).subscribe((res) => {
-      this.dataRole = res.data;
-      console.log(res);
-    });
-
-    // if (localStorage.getItem('roles') != null) {
-    //   this.allRoles = JSON.parse(localStorage.getItem('roles') || '{}');
-    // } else {
-    //   this.allRoles = [];
-    // }
+  ngOnInit() {
+    /* -------------------------------- api data -------------------------------- */
 
     /* -------------------------------- api data -------------------------------- */
     this.myForm = this.fb.group({
       title: new FormControl(),
       description: new FormControl(),
-      permission: this.fb.array([]),
+      permissions: this.fb.array([]),
     });
-    if (this.dataRole) {
-      this.myForm.patchValue({
-        title: this.dataRole.title,
-        description: this.dataRole.description,
-        permission: this.dataRole.permissions,
-      });
-    }
   }
 
   cancel() {
