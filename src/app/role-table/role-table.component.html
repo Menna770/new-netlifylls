@@ -13,6 +13,7 @@
           <td>{{role.title}}</td>
           <!-- <td><a class='btn btn-warning' (click)="EditRole(role.id)">Edit</a></td> -->
           <td><a class='btn btn-warning' [routerLink]="'/control/roles/addRole/' + role.id">Edit</a></td>
+          <td><a class='btn btn-primary' [routerLink]="'/control/EditRole/' + role.id">Edited</a></td>
 
         </tr>
       </tbody>

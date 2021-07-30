@@ -16,6 +16,7 @@ import { RoleTableComponent } from './role-table/role-table.component';
 import { AddRoleComponent } from './add-role/add-role.component';
 import { PermissionTableComponent } from './permission-table/permission-table.component';
 import { LoadingGuardGuard } from './loading-guard.guard';
+import { AddOrEditRoleComponent } from './add-or-edit-role/add-or-edit-role.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'control', pathMatch: 'full' },
@@ -73,6 +74,12 @@ const routes: Routes = [
           { path: 'editPermission', component: EditPermissionComponent },
         ],
       },
+      {
+        path:"AddRole",component:AddOrEditRoleComponent
+      },
+      {
+        path:"EditRole/:id",component:AddOrEditRoleComponent
+      }
     ],
   },
 ];

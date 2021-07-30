@@ -23,8 +23,8 @@ export class AddRoleComponent implements OnInit {
   listPermissions: any[] = [];
 
   allRoles: {}[] = [];
-
-  constructor(
+roletest:any;
+   constructor(
     public _RolesDataService: RolesDataService,
     private _Router: Router,
     private _UserDataService: UserDataService,
@@ -43,23 +43,32 @@ export class AddRoleComponent implements OnInit {
     });
 
     if (this.idRole) {
-      this._RolesDataService.getRoleById(this.idRole).subscribe((res) => {
-        console.log(res.data);
-        this.role = res.data;
-        console.log('rolPer', this.role);
-
-        // this.myForm.controls['title'].setValue(res.data.title);
-        // const rolePermission = <FormArray>this.myForm?.controls.permission;
-        // rolePermission.push(res.data.permissions);
-        // this.myForm.controls['permission'].patchValue(res.data.permissions);
-
-        this.myForm.setValue({
-          title: res.data.title,
-          description: res.data.description,
-          permissions: res.data.permissions,
-        });
-      });
+     this.filldata();
+      console.log('rolPerdd',  this.roletest);
+      console.log('rolPerdddd',  this.role);
     }
+  }
+
+  async filldata(){
+    this.roletest = await this._RolesDataService.getRoleById(this.idRole).toPromise();
+    console.log('xx',  this.roletest.data);
+     this._RolesDataService.getRoleById(this.idRole).subscribe((res) => {
+      console.log(res.data);
+      this.role = res.data;
+      console.log('rolPer', this.role);
+
+      // this.myForm.controls['title'].setValue(res.data.title);
+      // const rolePermission = <FormArray>this.myForm?.controls.permission;
+      // rolePermission.push(res.data.permissions);
+      // this.myForm.controls['permission'].patchValue(res.data.permissions);
+
+      this.myForm.setValue({
+        title: res.data.title,
+        description: res.data.description,
+        permissions: res.data.permissions,
+      });
+    });
+    console.log('rolPer2', this.role);
   }
   /* ------------------------------- submit fun ------------------------------- */
   submitRole(form: any) {
@@ -68,7 +77,7 @@ export class AddRoleComponent implements OnInit {
       //   console.log(res);
       // });
     } else {
-      this._RolesDataService.AddRoles(form.value).subscribe((res) => {
+      this._RolesDataService.AddRole(form.value).subscribe((res) => {
         console.log('add', res);
       });
     }

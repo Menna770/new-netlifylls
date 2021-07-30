@@ -1,0 +1,75 @@
+<section class="my-4">
+  <div class="container">
+    <!-- <div class='roleInput w-25 mb-3'>
+          <label for="f-name" class="form-label">Role Name</label>
+          <input type="text" class="form-control" id="f-name" [(ngModel)]="role.title"/>
+          <div class="text-danger my-2" *ngIf="myForm.get('title')?.errors != null && myForm.get('title')?.touched">
+            <p *ngIf='myForm.get("title")?.errors?.required'>Role Name is required</p>
+            <p *ngIf='myForm.get("title")?.errors?.minlength'>Min characters: 3 </p>
+            <p *ngIf='myForm.get("title")?.errors?.maxlength'>Max characters: 10 </p>
+          </div>
+        </div>
+        <div class='roleInput w-25'>
+          <label for="f-name" class="form-label">Role Description</label>
+          <input type="text" class="form-control" id="f-name" [(ngModel)]="role.description"/>
+          <div class="text-danger my-2" *ngIf="myForm.get('title')?.errors != null && myForm.get('title')?.touched">
+            <p *ngIf='myForm.get("title")?.errors?.required'>Role Name is required</p>
+            <p *ngIf='myForm.get("title")?.errors?.minlength'>Min characters: 3 </p>
+            <p *ngIf='myForm.get("title")?.errors?.maxlength'>Max characters: 10 </p>
+          </div>
+        </div>
+  
+        <div class="permissions my-4" >
+
+          <div class="form-check form-check-block" *ngFor="let per of Permissions;">
+            <input class="form-check-input" type="checkbox"
+            [checked]="role.permissions.includes(per.id)"
+            >
+            <label class="form-check-label" >{{per.title}}</label>
+          </div>
+        </div>
+
+  
+        <div class="text-end">
+          <button type="button" class="btn btn-danger me-2" *ngIf="this.idRole" (click)='deleteRole()'>Delete
+            Role</button>
+          <button type="button" class="btn btn-warning me-2" (click)='cancel()'>Cancel</button>
+          <button [disabled]='myForm.invalid' type="submit" class="btn btn-primary me-2">Save</button>
+  
+        </div> -->
+
+    <form [formGroup]='form' (ngSubmit)='submitRole(form)'>
+      <div class='roleInput w-50 mb-3'>
+        <label for="f-name" class="form-label">Role Name</label>
+        <input type="text" class="form-control" id="f-name" formControlName='title' />
+        <span class="text-danger"
+          *ngIf="(registerFormControl.title.touched) && registerFormControl.title.errors?.required">
+          Role Name is required
+        </span>
+      </div>
+      <div class='roleInput w-50'>
+        <label for="f-name" class="form-label">Role Description</label>
+        <input type="text" class="form-control" id="f-name" formControlName='description' />
+      </div>
+
+      <div class="permissions my-4" formArrayName='permissions'>
+
+        <div class="form-check form-check-block" *ngFor="let per of Permissions">
+          <input class="form-check-input" type="checkbox" [id]="per.id" (change)="onChange(per.id)"
+            [checked]="form.value.permissions?.includes(per.id)">
+          <label class="form-check-label" [for]="per.id">{{per.title}}</label>
+        </div>
+      </div>
+      <!-- [checked]='rolPer.length > 0  && rolPer.findIndex(rolPermission.id)'> -->
+
+      <div class="text-end">
+        <button type="button" class="btn btn-danger me-2" *ngIf="roleId" (click)='deleteRole(form)'>Delete
+          Role</button>
+        <button type="button" class="btn btn-warning me-2" (click)='cancel()'>Cancel</button>
+        <button [disabled]="form.invalid" type="submit" class="btn btn-primary me-2">{{addOrEdit}}</button>
+
+      </div>
+    </form>
+
+  </div>
+</section>

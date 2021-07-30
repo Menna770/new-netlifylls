@@ -31,14 +31,19 @@ export class RolesDataService {
     );
   }
 
-  AddRoles(form: any): Observable<any> {
+  AddRole(form: any): Observable<any> {
     const headers = { 'Content-Type': 'application/json' };
     return this._HttpClient.post(`${this.api}/role/Create`, form, { headers });
   }
 
-  editRoles(form: any): Observable<any> {
+  EditRole(form: any): Observable<any> {
     const headers = { 'Content-Type': 'application/json' };
     return this._HttpClient.post(`${this.api}/role/Edit`, form, { headers });
+  }
+
+  DeleteRole(form: any): Observable<any> {
+    const headers = { 'Content-Type': 'application/json' };
+    return this._HttpClient.post(`${this.api}/role/Delete`, form, { headers });
   }
 
   getRoleById(id: any): Observable<any> {

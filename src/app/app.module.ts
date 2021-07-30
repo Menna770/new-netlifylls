@@ -21,6 +21,7 @@ import { AddRoleComponent } from './add-role/add-role.component';
 import { PermissionTableComponent } from './permission-table/permission-table.component';
 import { EditPermissionComponent } from './edit-permission/edit-permission.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AddOrEditRoleComponent } from './add-or-edit-role/add-or-edit-role.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { HttpClientModule } from '@angular/common/http';
     AddRoleComponent,
     PermissionTableComponent,
     EditPermissionComponent,
+    AddOrEditRoleComponent,
   ],
   imports: [
     BrowserModule,
