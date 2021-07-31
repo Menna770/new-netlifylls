@@ -12,7 +12,6 @@ export class PermissionDataService {
   stop: boolean = false;
   api: string = 'https://asrt-lls-api.herokuapp.com/api';
 
-
   getPermissions(): Observable<any> {
     const headers = { 'Content-Type': 'application/json' };
     return this._HttpClient.post(
@@ -24,12 +23,16 @@ export class PermissionDataService {
 
   AddPermissions(data: any): Observable<any> {
     const headers = { 'Content-Type': 'application/json' };
-    return this._HttpClient.post(`${this.api}/Permission/Create`, data, { headers });
+    return this._HttpClient.post(`${this.api}/Permission/Create`, data, {
+      headers,
+    });
   }
 
   editPermissions(data: any): Observable<any> {
     const headers = { 'Content-Type': 'application/json' };
-    return this._HttpClient.post(`${this.api}/Permission/Edit`, data, { headers });
+    return this._HttpClient.post(`${this.api}/Permission/Edit`, data, {
+      headers,
+    });
   }
 
   getPermissionById(id: any): Observable<any> {

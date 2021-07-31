@@ -1,7 +1,7 @@
-import { RolesDataService } from './../roles-data.service';
+import { RolesDataService } from '../../services/roles-data.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserDataService } from '../user-data.service';
+import { UserDataService } from '../../services/user-data.service';
 
 @Component({
   selector: 'app-role-table',
@@ -14,21 +14,11 @@ export class RoleTableComponent implements OnInit {
     private _RolesDataService: RolesDataService,
     private _UserDataService: UserDataService
   ) {}
-
+  allRoles: any;
   ngOnInit(): void {
     /* ----------------------------- api data table ----------------------------- */
     this._RolesDataService.getRoles().subscribe((data) => {
       this.allRoles = data.data;
-      console.log(data.data);
     });
   }
-
-  allRoles: any;
-
-  // EditRole(id: number) {
-  //   this._Router.navigate(['./control/roles/addRole']);
-  //   this._RolesDataService.checkEditRole = true;
-  //   this._RolesDataService.stop = true;
-  //   // this._RolesDataService.roleIndex = id;
-  // }
 }

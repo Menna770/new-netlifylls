@@ -22,15 +22,6 @@ export class RolesDataService {
     });
   }
 
-  getPermissions(): Observable<any> {
-    const headers = { 'Content-Type': 'application/json' };
-    return this._HttpClient.post(
-      `${this.api}/permission/GetAllPermissions`,
-      '{}',
-      { headers }
-    );
-  }
-
   AddRole(form: any): Observable<any> {
     const headers = { 'Content-Type': 'application/json' };
     return this._HttpClient.post(`${this.api}/role/Create`, form, { headers });

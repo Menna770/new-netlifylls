@@ -13,15 +13,13 @@ import { LearningAnalysesComponent } from './learning-analyses/learning-analyses
 import { LabeSectionComponent } from './labe-section/labe-section.component';
 import { ExperimentsComponent } from './experiments/experiments.component';
 import { CoursesComponent } from './courses/courses.component';
-import { RolesComponent } from './roles/roles.component';
 import { PermissionComponent } from './permission/permission.component';
 import { UserTableComponent } from './user-table/user-table.component';
-import { RoleTableComponent } from './role-table/role-table.component';
-import { AddRoleComponent } from './add-role/add-role.component';
+import { RoleTableComponent } from './role/role-table/role-table.component';
 import { PermissionTableComponent } from './permission-table/permission-table.component';
 import { EditPermissionComponent } from './edit-permission/edit-permission.component';
 import { HttpClientModule } from '@angular/common/http';
-import { AddOrEditRoleComponent } from './add-or-edit-role/add-or-edit-role.component';
+import { AddOrEditRoleComponent } from './role/add-or-edit-role/add-or-edit-role.component';
 
 @NgModule({
   declarations: [
@@ -35,11 +33,9 @@ import { AddOrEditRoleComponent } from './add-or-edit-role/add-or-edit-role.comp
     LabeSectionComponent,
     ExperimentsComponent,
     CoursesComponent,
-    RolesComponent,
     PermissionComponent,
     UserTableComponent,
     RoleTableComponent,
-    AddRoleComponent,
     PermissionTableComponent,
     EditPermissionComponent,
     AddOrEditRoleComponent,

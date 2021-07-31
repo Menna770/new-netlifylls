@@ -9,14 +9,12 @@ import { ExperimentsComponent } from './experiments/experiments.component';
 import { LabeSectionComponent } from './labe-section/labe-section.component';
 import { LearningAnalysesComponent } from './learning-analyses/learning-analyses.component';
 import { GradingBookComponent } from './grading-book/grading-book.component';
-import { RolesComponent } from './roles/roles.component';
 import { PermissionComponent } from './permission/permission.component';
 import { UserTableComponent } from './user-table/user-table.component';
-import { RoleTableComponent } from './role-table/role-table.component';
-import { AddRoleComponent } from './add-role/add-role.component';
+import { RoleTableComponent } from './role/role-table/role-table.component';
 import { PermissionTableComponent } from './permission-table/permission-table.component';
 import { LoadingGuardGuard } from './loading-guard.guard';
-import { AddOrEditRoleComponent } from './add-or-edit-role/add-or-edit-role.component';
+import { AddOrEditRoleComponent } from './role/add-or-edit-role/add-or-edit-role.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'control', pathMatch: 'full' },
@@ -45,25 +43,7 @@ const routes: Routes = [
           },
         ],
       },
-      /* ---------------------------------- roles component --------------------------------- */
-      {
-        path: 'roles',
-        component: RolesComponent,
-        children: [
-          { path: '', redirectTo: 'roleTable', pathMatch: 'full' },
-          { path: 'roleTable', component: RoleTableComponent },
-          {
-            path: 'addRole/:id',
-            component: AddRoleComponent,
-            canDeactivate: [LoadingGuardGuard],
-          },
-          {
-            path: 'addRole',
-            component: AddRoleComponent,
-            canDeactivate: [LoadingGuardGuard],
-          },
-        ],
-      },
+
       /* -------------------------- permission component -------------------------- */
       {
         path: 'permission',
@@ -74,12 +54,19 @@ const routes: Routes = [
           { path: 'editPermission', component: EditPermissionComponent },
         ],
       },
+      /* ---------------------------------- roles component --------------------------------- */
       {
-        path:"AddRole",component:AddOrEditRoleComponent
+        path: 'role',
+        component: RoleTableComponent,
       },
       {
-        path:"EditRole/:id",component:AddOrEditRoleComponent
-      }
+        path: 'AddRole',
+        component: AddOrEditRoleComponent,
+      },
+      {
+        path: 'EditRole/:id',
+        component: AddOrEditRoleComponent,
+      },
     ],
   },
 ];
